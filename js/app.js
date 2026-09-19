@@ -1521,6 +1521,29 @@ function initTheme() {
   });
 }
 
+function initFullscreen() {
+  const button = document.getElementById('btn-fullscreen');
+  if (!button || !document.fullscreenEnabled) return;
+
+  const updateLabel = () => {
+    const active = Boolean(document.fullscreenElement);
+    button.textContent = active ? 'X' : 'FS';
+    button.setAttribute('aria-label', active ? 'Exit Fullscreen' : 'Enter Fullscreen');
+    button.title = active ? 'Exit Fullscreen' : 'Enter Fullscreen';
+  };
+
+  button.addEventListener('click', async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
+    } catch {
+      toast('Fullscreen is not available in this browser.');
+    }
+  });
+  document.addEventListener('fullscreenchange', updateLabel);
+  updateLabel();
+}
+
 function initShareAndPrint() {
   document.getElementById('btn-share-result')?.addEventListener('click', async () => {
     const { questions, answers } = state.quiz;
@@ -1572,6 +1595,7 @@ function checkActiveQuizSession() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initFullscreen();
   initAuth();
   initConfig();
   initQuizControls();
