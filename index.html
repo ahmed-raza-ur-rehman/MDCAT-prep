@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MDCAT PrepMaster – Pakistan's Premier MDCAT Preparation Platform</title>
+  <meta name="description" content="2,125 authentic MDCAT past paper questions (2020-2025) with detailed explanations, textbook citations, study guides, formula sheets, and nationwide live rankings.">
+  <meta name="theme-color" content="#0b0814">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="MDCAT PrepMaster – Pakistan's Premier MDCAT Prep Platform">
+  <meta property="og:description" content="Ace your MDCAT with 2,125 verified past paper questions, timed mock exams, formula sheets, and live student rankings.">
+  <meta property="og:type" content="website">
+  <meta name="author" content="Ahmed Raza Ur Rehman">
+
+  <!-- Typography & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- KaTeX for Scientific Equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+
+  <!-- Chart.js for Dashboard Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- NAVIGATION BAR -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <button class="nav-brand" id="btn-home" aria-label="Go to Homepage">
+      <div class="nav-logo">M</div>
+      <div>
+        <div class="nav-title">MDCAT PrepMaster</div>
+        <div class="nav-sub">2020 – 2025 · 2,125 Past MCQs</div>
+      </div>
+    </button>
+
+    <nav class="nav-links" aria-label="Main Navigation">
+      <button class="nav-link" id="nav-quiz" data-view="config">Practice</button>
+      <button class="nav-link" id="nav-prep" data-view="prep">Prep Hub</button>
+      <button class="nav-link" id="nav-leaderboard" data-view="leaderboard">Rankings</button>
+      <button class="nav-link" id="nav-admin" data-view="admin">Admin</button>
+    </nav>
+
+    <div class="nav-end">
+      <a href="https://wa.me/923180400030?text=Hello%20Ahmed,%20I%20am%20using%20MDCAT%20PrepMaster" 
+         target="_blank" rel="noopener noreferrer" class="btn btn-sm nav-wa-btn" aria-label="Contact on WhatsApp">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.22 8.22 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.19 8.19 0 0 1-1.26-4.37c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.48-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43l-.48-.01z"/></svg>
+        <span>WhatsApp</span>
+      </a>
+
+      <div id="nav-auth-wrap">
+        <button class="btn btn-sm btn-outline" id="btn-open-auth">Sign In</button>
+        <button class="user-badge" id="btn-user-profile" hidden aria-label="User Profile">
+          <span class="user-avatar" id="user-nav-avatar">S</span>
+          <span class="user-nav-name" id="user-nav-name">Student</span>
+        </button>
+      </div>
+
+      <button class="icon-btn" id="btn-theme" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">☀️</button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: HOME -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-home" class="view active">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content container">
+        <div class="hero-badge-wrap">
+          <span class="pill">✦ 2020 – 2025 Authentic Past Papers · 2,125 Solved MCQs</span>
+        </div>
+        <h1 class="hero-title">Ace Your MDCAT.<br><span>Practice Smarter.</span></h1>
+        <p class="hero-desc">The high-yield MDCAT simulation platform featuring official past questions from UHS, NUMS, KMU, SZABMU, SIBA, and PMC with verified explanations, textbook citations, and real-time nationwide rankings.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" id="btn-start-practice">Start Practice Test →</button>
+          <button class="btn btn-secondary btn-lg" id="btn-go-prep">Prep Hub & Notes 📖</button>
+          <button class="btn btn-ghost btn-lg" id="btn-view-rankings">Leaderboard 🏆</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-strip container">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-questions">2,125</div>
+        <div class="stat-label">Verified MCQs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Past Exam Papers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Core Subjects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Free & Unlocked</div>
+      </div>
+    </section>
+
+    <!-- Targeted Subject Cards -->
+    <section class="quick-section container">
+      <div class="section-header">
+        <h2 class="section-title">Targeted Subject Modules</h2>
+        <span class="section-badge">PMDC Weighted</span>
+      </div>
+      <div class="quick-grid" id="quick-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Prep Hub Callout Banner -->
+    <section class="container prep-banner-section">
+      <div class="prep-banner-card">
+        <div class="prep-banner-text">
+          <span class="pill pill-gold">High-Yield Revision Companion</span>
+          <h3>Formula Sheets, Reaction Schemes &amp; Top 100 Vocab</h3>
+          <p>Sharpen your concepts with interactive physics formula cards, organic chemistry reaction maps, biology comparison tables, and PMDC high-frequency vocabulary mnemonics.</p>
+        </div>
+        <button class="btn btn-primary" id="btn-banner-prep">Open Study Hub →</button>
+      </div>
+    </section>
+
+    <!-- Mini Leaderboard Preview -->
+    <section class="leaderboard-preview container">
+      <div class="section-header">
+        <h2 class="section-title">Top Merit Candidates</h2>
+        <button class="btn btn-ghost btn-sm" id="btn-all-rankings">Full Rankings →</button>
+      </div>
+      <div class="leader-list" id="mini-leader-list">
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: QUIZ CONFIGURATION -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-config" class="view">
+    <div class="container config-container">
+      <div class="view-header">
+        <h2 class="page-title">Custom Test Configuration</h2>
+        <p class="page-subtitle">Configure your mock test parameters, timer constraints, and question pool filters.</p>
+      </div>
+
+      <!-- Candidate Identifier -->
+      <div class="config-card">
+        <label class="config-label" for="player-name">Candidate Name / Roll Identifier</label>
+        <input type="text" id="player-name" class="input" placeholder="Enter your full name for leaderboard ranking" maxlength="40" autocomplete="name">
+      </div>
+
+      <!-- Subject Selection -->
+      <div class="config-card">
+        <label class="config-label">Select Subject</label>
+        <div class="chip-group" id="filter-subject" role="group" aria-label="Subject filter">
+          <button class="chip active" data-val="All">All Subjects</button>
+          <button class="chip" data-val="Biology">🧬 Biology</button>
+          <button class="chip" data-val="Chemistry">🧪 Chemistry</button>
+          <button class="chip" data-val="Physics">⚡ Physics</button>
+          <button class="chip" data-val="English">📖 English</button>
+          <button class="chip" data-val="Logical Reasoning">🧩 Logical Reasoning</button>
+        </div>
+      </div>
+
+      <!-- Exam Year Selection -->
+      <div class="config-card">
+        <label class="config-label">Past Paper Year</label>
+        <div class="chip-group" id="filter-year" role="group" aria-label="Year filter">
+          <button class="chip active" data-val="All">All Years (2020–2025)</button>
+          <button class="chip" data-val="2025">2025 (Latest)</button>
+          <button class="chip" data-val="2024">2024</button>
+          <button class="chip" data-val="2023">2023</button>
+          <button class="chip" data-val="2022">2022</button>
+          <button class="chip" data-val="2020">2020</button>
+        </div>
+      </div>
+
+      <!-- Exam Board / University -->
+      <div class="config-card">
+        <label class="config-label">Exam Authority / University Paper</label>
+        <div class="chip-group" id="filter-paper" role="group" aria-label="Exam Board filter">
+          <button class="chip active" data-val="All">All Boards</button>
+          <button class="chip" data-val="UHS">UHS (Punjab)</button>
+          <button class="chip" data-val="NUMS">NUMS (National)</button>
+          <button class="chip" data-val="KMU">KMU (KPK)</button>
+          <button class="chip" data-val="SZABMU">SZABMU (Federal)</button>
+          <button class="chip" data-val="SIBA">SIBA / DUHS (Sindh)</button>
+          <button class="chip" data-val="PMC">PMC (National)</button>
+        </div>
+      </div>
+
+      <!-- Question Count Slider & Presets -->
+      <div class="config-card">
+        <div class="config-header-row">
+          <label class="config-label" for="q-count">Question Volume</label>
+          <span class="badge-accent" id="q-count-badge">30 MCQs</span>
+        </div>
+        <div class="chip-group count-presets" id="count-presets">
+          <button class="chip-sm" data-count="10">Quick 10</button>
+          <button class="chip-sm active" data-count="30">Standard 30</button>
+          <button class="chip-sm" data-count="50">Sectional 50</button>
+          <button class="chip-sm" data-count="100">Centum 100</button>
+          <button class="chip-sm" data-count="200">Full Mock 200</button>
+        </div>
+        <div class="slider-row">
+          <input type="range" id="q-count" min="5" max="200" value="30" step="5" class="slider" aria-label="Question Count Slider">
+          <span class="slider-val" id="q-count-val">30</span>
+        </div>
+        <div class="slider-hint" id="q-available">Scanning database pool…</div>
+      </div>
+
+      <!-- Timing Mode -->
+      <div class="config-card">
+        <label class="config-label">Timer Mode</label>
+        <div class="chip-group" id="timer-type" role="group" aria-label="Timer Type">
+          <button class="chip active" data-val="none">Untimed (Self-Paced)</button>
+          <button class="chip" data-val="total">Total Exam Timer</button>
+          <button class="chip" data-val="per-question">Per-MCQ Speed Timer</button>
+          <button class="chip" data-val="tiered">Tiered Difficulty Timer</button>
+        </div>
+
+        <div id="sub-timer-total" class="sub-timer-options" hidden>
+          <span class="sub-timer-label">Choose Total Duration:</span>
+          <div class="chip-group" id="timer-total-val">
+            <button class="chip-sm" data-mins="15">15 min</button>
+            <button class="chip-sm active" data-mins="30">30 min</button>
+            <button class="chip-sm" data-mins="45">45 min</button>
+            <button class="chip-sm" data-mins="60">60 min</button>
+            <button class="chip-sm" data-mins="120">120 min</button>
+            <button class="chip-sm" data-mins="210">210 min (PMDC Standard)</button>
+          </div>
+        </div>
+
+        <div id="sub-timer-per-q" class="sub-timer-options" hidden>
+          <span class="sub-timer-label">Speed Allowance Per MCQ:</span>
+          <div class="chip-group" id="timer-per-q-val">
+            <button class="chip-sm" data-secs="30">30 s (Pro Speed)</button>
+            <button class="chip-sm active" data-secs="45">45 s (Exam Benchmark)</button>
+            <button class="chip-sm" data-secs="60">60 s</button>
+            <button class="chip-sm" data-secs="90">90 s (Calculations)</button>
+          </div>
+        </div>
+
+        <div id="sub-timer-tiered" class="sub-timer-options" hidden>
+          <p class="tiered-info">⚡ <strong>Tiered Adaptive Timing:</strong> Biology/English: 35s · Chemistry: 50s · Physics/Calculations: 75s.</p>
+        </div>
+      </div>
+
+      <!-- Feedback Mode -->
+      <div class="config-card">
+        <label class="config-label">Mode &amp; Feedback</label>
+        <div class="chip-group" id="review-mode" role="group" aria-label="Review Feedback Mode">
+          <button class="chip active" data-val="after-quiz">Exam Simulation (Answers at End)</button>
+          <button class="chip" data-val="after-question">Study Practice (Instant Solution)</button>
+        </div>
+        <div class="config-sublabel" id="review-mode-desc">Realistic mock test: your choices are recorded, results and explanations are revealed upon submission.</div>
+      </div>
+
+      <!-- Shuffle Options -->
+      <div class="config-card toggle-row">
+        <div>
+          <div class="config-label" style="margin-bottom:2px;">Randomize Questions &amp; Choices</div>
+          <div class="config-sublabel">Shuffles question sequence and options order to eliminate muscle memory bias</div>
+        </div>
+        <label class="toggle" aria-label="Randomize Questions and Options">
+          <input type="checkbox" id="opt-shuffle" checked>
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+
+      <!-- Live Summary Status -->
+      <div class="config-summary" id="config-summary">Preparing question engine…</div>
+
+      <div class="questions-loading-bar" id="questions-loading-bar">
+        <div class="questions-loading-inner">
+          <svg class="spinner-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke="var(--accent)"/></svg>
+          <span id="questions-loading-text">Loading question repository…</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg" id="btn-launch-quiz">
+        Launch Practice Test →
+      </button>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: QUIZ RUNTIME ENGINE -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-quiz" class="view">
+    <!-- Progress Bar -->
+    <div class="quiz-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+    </div>
+
+    <div class="container quiz-container">
+      <!-- Quiz Header Strip -->
+      <div class="quiz-header">
+        <div class="quiz-meta-wrap">
+          <span class="quiz-counter" id="quiz-counter">1 / 30</span>
+          <span class="quiz-subject-badge" id="quiz-subject-badge">Biology</span>
+          <span class="quiz-paper-badge" id="quiz-paper-badge">UHS 2025</span>
+        </div>
+
+        <div class="quiz-actions-wrap">
+          <!-- Flag Button -->
+          <button class="quiz-tool-btn" id="btn-flag-q" aria-label="Flag Question for Review" title="Flag/Bookmark (Press F)">
+            <span id="flag-icon">🚩</span>
+            <span class="tool-label">Flag</span>
+          </button>
+          
+          <!-- Palette Toggle Button -->
+          <button class="quiz-tool-btn" id="btn-toggle-palette" aria-label="Toggle Question Palette" title="View Question Matrix">
+            <span>📑</span>
+            <span class="tool-label">Matrix</span>
+          </button>
+
+          <!-- Timer Widget -->
+          <div class="quiz-timer-wrap" id="quiz-timer-wrap" hidden>
+            <div class="quiz-timer" id="quiz-timer" aria-live="polite" aria-label="Time remaining">45</div>
+            <svg class="timer-ring" viewBox="0 0 36 36" aria-hidden="true">
+              <circle class="timer-ring-bg" cx="18" cy="18" r="15.9"/>
+              <circle class="timer-ring-fill" id="timer-ring-fill" cx="18" cy="18" r="15.9"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Content Card -->
+      <div class="question-card" id="question-card">
+        <div class="q-number-pill" id="q-number-pill">Question 1</div>
+        <p class="question-text" id="question-text"></p>
+      </div>
+
+      <!-- Options Radiogroup -->
+      <div class="options-list" id="options-list" role="radiogroup" aria-label="Answer options">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Instant Review Panel (Study Mode) -->
+      <div class="review-panel" id="review-panel" hidden>
+        <div class="review-verdict" id="review-verdict"></div>
+        <div class="review-explanation" id="review-explanation"></div>
+        <div class="review-ref" id="review-ref"></div>
+      </div>
+
+      <!-- Quiz Navigation Controls -->
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="btn-prev-q" aria-label="Previous question">← Back</button>
+        <div class="quiz-nav-right">
+          <button class="btn btn-ghost" id="btn-skip" aria-label="Skip question">Skip ⏭</button>
+          <button class="btn btn-primary" id="btn-next" aria-label="Next question">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Palette Drawer / Modal -->
+    <div class="palette-modal-backdrop" id="palette-modal" hidden>
+      <div class="palette-card">
+        <div class="palette-header">
+          <h3>Question Navigator</h3>
+          <button class="icon-btn" id="btn-close-palette" aria-label="Close Question Navigator">✕</button>
+        </div>
+        <div class="palette-legend">
+          <span class="legend-item"><span class="dot answered"></span> Answered</span>
+          <span class="legend-item"><span class="dot current"></span> Current</span>
+          <span class="legend-item"><span class="dot flagged"></span> Flagged</span>
+          <span class="legend-item"><span class="dot unanswered"></span> Unanswered</span>
+        </div>
+        <div class="palette-grid" id="palette-grid">
+          <!-- Rendered dynamically -->
+        </div>
+        <div class="palette-footer">
+          <button class="btn btn-primary btn-full btn-sm" id="btn-submit-exam-early">Submit &amp; Finish Test ✓</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: RESULTS & SCORECARD -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-results" class="view">
+    <div class="container results-container">
+      <div class="score-card-hero" id="printable-scorecard">
+        <!-- Circular Score Meter -->
+        <div class="score-circle-wrap">
+          <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="score-ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="score-ring-fill" id="score-ring-fill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="score-inner">
+            <div class="score-pct" id="score-pct">0%</div>
+            <div class="score-fraction" id="score-fraction">0 / 0</div>
+          </div>
+        </div>
+
+        <div class="score-grade" id="score-grade">Evaluating Performance...</div>
+        <div class="score-time" id="score-time">⏱ Time Elapsed: 0s</div>
+        <div class="score-percentile-banner" id="score-percentile-banner" hidden></div>
+      </div>
+
+      <!-- Subject Accuracy Breakdown -->
+      <div class="breakdown-card" id="breakdown-card"></div>
+
+      <!-- Save to Leaderboard / Cloud Sync Card -->
+      <div class="save-card" id="save-card">
+        <h3 class="save-title">Nationwide Leaderboard Submission</h3>
+        <p class="save-sub" id="save-sub-text">Enter your name to publish your verified score to the live Pakistan student leaderboard.</p>
+        <div class="save-form-row">
+          <input type="text" id="result-name" class="input" placeholder="Enter full candidate name" maxlength="40">
+          <button class="btn btn-primary" id="btn-save-score">Publish Rank 🏆</button>
+        </div>
+        <div class="save-status" id="save-status"></div>
+      </div>
+
+      <!-- Social Share & Print Actions -->
+      <div class="results-share-bar">
+        <button class="btn btn-ghost btn-sm" id="btn-share-result">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share Score
+        </button>
+        <button class="btn btn-ghost btn-sm" id="btn-print-results">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Export / Print PDF
+        </button>
+      </div>
+
+      <!-- Full Question-by-Question Solution Review -->
+      <button class="btn btn-outline btn-full" id="btn-review-answers">Toggle Detailed Answer Explanations 📋</button>
+      <div class="full-review" id="full-review" hidden></div>
+
+      <div class="results-actions">
+        <button class="btn btn-ghost" id="btn-retake">↻ Retake Same Quiz</button>
+        <button class="btn btn-primary" id="btn-new-quiz">Configure New Test →</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: PREP HUB (STUDY COMPANION) -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-prep" class="view">
+    <div class="container">
+      <div class="prep-header">
+        <span class="pill">PMDC High-Yield Study Companion</span>
+        <h2 class="page-title">MDCAT Prep Hub</h2>
+        <p class="prep-intro">Master high-yield formulas, reaction schemes, biological comparison tables, and top 100 PMDC vocabulary mnemonics.</p>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="prep-tabs" role="tablist">
+        <button class="prep-tab active" data-tab="chapters">📚 Syllabus Chapters</button>
+        <button class="prep-tab" data-tab="biology">🧬 Biology Notes</button>
+        <button class="prep-tab" data-tab="chemistry">🧪 Chemistry Notes</button>
+        <button class="prep-tab" data-tab="physics">⚡ Physics Notes</button>
+        <button class="prep-tab" data-tab="formulas">📐 Formulas Sheet</button>
+        <button class="prep-tab" data-tab="diagrams">🖼️ Visual Diagrams</button>
+        <button class="prep-tab" data-tab="vocab">📖 Top 100 Vocab</button>
+        <button class="prep-tab" data-tab="syllabus">📊 Exam Weightage</button>
+      </div>
+
+      <!-- Prep Search Input -->
+      <div class="prep-search-row">
+        <input type="text" id="prep-search" class="input" placeholder="Search across chapters, equations, concepts, reactions, and vocabulary…">
+      </div>
+
+      <!-- Content Container -->
+      <div id="prep-content" class="prep-content-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: LEADERBOARD -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-leaderboard" class="view">
+    <div class="container">
+      <div class="lb-header">
+        <span class="pill">Live Pakistan Merit Rankings</span>
+        <h2 class="page-title">🏆 Candidate Leaderboard</h2>
+        <p class="lb-intro">Live performance ranks calculated by percentage accuracy, question difficulty, and completion speed across all 2020-2025 past papers.</p>
+      </div>
+
+      <div class="lb-stats-banner" id="lb-stats-banner">
+        <div class="lb-stat-item">
+          <span class="lb-stat-val" id="lb-total-attempts">–</span>
+          <span class="lb-stat-lbl">Total Mock Attempts</span>
+        </div>
+        <div class="lb-stat-item">
+          <span class="lb-stat-val" id="lb-unique-candidates">–</span>
+          <span class="lb-stat-lbl">Registered Aspirants</span>
+        </div>
+        <div class="lb-stat-item">
+          <span class="lb-stat-val" id="lb-avg-score">–%</span>
+          <span class="lb-stat-lbl">National Average</span>
+        </div>
+      </div>
+
+      <div class="lb-filters">
+        <input type="text" id="lb-search" class="input" placeholder="Search candidate by name…" aria-label="Search rankings">
+        <select id="lb-subject-filter" class="select" aria-label="Filter by subject">
+          <option value="All">All Subjects</option>
+          <option value="Biology">Biology</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Physics">Physics</option>
+          <option value="English">English</option>
+          <option value="Logical Reasoning">Logical Reasoning</option>
+        </select>
+        <select id="lb-year-filter" class="select" aria-label="Filter by year">
+          <option value="All">All Exam Years</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2020">2020</option>
+        </select>
+      </div>
+
+      <div class="leaderboard-table-wrap">
+        <table class="leaderboard-table" aria-label="Candidate Leaderboard">
+          <thead>
+            <tr>
+              <th># Rank</th>
+              <th>Candidate</th>
+              <th>Accuracy</th>
+              <th>Subject</th>
+              <th>Paper / Year</th>
+              <th>Time</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="lb-tbody">
+            <tr><td colspan="7" class="loading-cell">Loading live merit standings…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- VIEW: ADMIN DASHBOARD -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <main id="view-admin" class="view">
+    <div class="container">
+      <!-- Admin Login Gate -->
+      <div id="admin-gate" class="admin-gate">
+        <span class="pill">Restricted Admin Area</span>
+        <h2 class="page-title">Admin Dashboard</h2>
+        <p class="admin-gate-desc">Enter the administrative secret key to inspect analytics, registrations, and exam activity.</p>
+        
+        <form class="admin-login-row" id="form-admin-login" onsubmit="event.preventDefault()">
+          <input type="password" id="admin-key-input" class="input" placeholder="Enter Admin Access Key" autocomplete="current-password">
+          <button type="submit" class="btn btn-primary" id="btn-admin-login">Login →</button>
+        </form>
+        <div class="admin-error" id="admin-error"></div>
+      </div>
+
+      <!-- Admin Management Console (Post-Auth) -->
+      <div id="admin-dashboard" hidden>
+        <div class="admin-header">
+          <div>
+            <h2 class="page-title">📊 Platform Analytics</h2>
+            <p class="admin-sub">Candidate engagement metrics, subject score breakdown, and system performance.</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-admin-refresh">↻ Refresh Data</button>
+        </div>
+
+        <!-- Summary KPI Cards -->
+        <div class="admin-summary">
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="adm-attempts">–</div>
+            <div class="admin-stat-label">Total Test Attempts</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="adm-users">–</div>
+            <div class="admin-stat-label">Unique Candidates</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="adm-registered">–</div>
+            <div class="admin-stat-label">Registered Accounts</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="adm-avg">–</div>
+            <div class="admin-stat-label">Overall Average %</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 class="chart-title">Attempt Activity (Last 7 Days)</h3>
+            <canvas id="chart-activity" aria-label="Activity chart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Average Accuracy by Subject</h3>
+            <canvas id="chart-subjects" aria-label="Subject performance chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Registered Students Table -->
+        <div class="admin-table-card">
+          <h3 class="chart-title">Registered Students Directory</h3>
+          <div class="table-scroll">
+            <table class="leaderboard-table" aria-label="Registered Candidates">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Target Medical College</th><th>Tests</th><th>Avg %</th></tr>
+              </thead>
+              <tbody id="adm-users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top Merit Scores Table -->
+        <div class="admin-table-card">
+          <h3 class="chart-title">Highest Recorded Scores</h3>
+          <div class="table-scroll">
+            <table class="leaderboard-table" aria-label="Top Candidate Records">
+              <thead>
+                <tr><th>#</th><th>Candidate</th><th>Accuracy %</th><th>Subject</th><th>Paper</th></tr>
+              </thead>
+              <tbody id="adm-top-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Submissions Table -->
+        <div class="admin-table-card">
+          <h3 class="chart-title">Recent Submissions Log</h3>
+          <div class="table-scroll">
+            <table class="leaderboard-table" aria-label="Recent Test Logs">
+              <thead>
+                <tr><th>Candidate</th><th>Score</th><th>Subject</th><th>Paper</th><th>Time</th><th>Date</th></tr>
+              </thead>
+              <tbody id="adm-recent-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- MODAL: AUTHENTICATION (SIGN IN / REGISTER) -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="auth-modal" hidden>
+    <div class="modal-card auth-modal-card">
+      <button class="modal-close" id="btn-close-auth" aria-label="Close modal">✕</button>
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-login" data-target="form-login">Sign In</button>
+        <button class="auth-tab" id="tab-signup" data-target="form-signup">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form" id="form-login">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="input" placeholder="aspirant@gmail.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="input" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <div class="auth-error" id="login-error"></div>
+        <button type="submit" class="btn btn-primary btn-full" id="btn-submit-login">Sign In →</button>
+        <button type="button" class="btn btn-ghost btn-full btn-sm" id="btn-guest-login">Continue as Guest Student</button>
+      </form>
+
+      <!-- Registration Form -->
+      <form class="auth-form" id="form-signup" hidden>
+        <div class="form-group">
+          <label for="signup-name">Full Candidate Name</label>
+          <input type="text" id="signup-name" class="input" placeholder="e.g. Dr. Areeba Tariq" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email Address</label>
+          <input type="email" id="signup-email" class="input" placeholder="student@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="signup-target">Dream Medical College</label>
+          <select id="signup-target" class="select">
+            <option value="King Edward Medical University (KEMU)">King Edward Medical University (KEMU)</option>
+            <option value="Allama Iqbal Medical College (AIMC)">Allama Iqbal Medical College (AIMC)</option>
+            <option value="Dow University of Health Sciences (DUHS)">Dow University of Health Sciences (DUHS)</option>
+            <option value="Army Medical College (AMC)">Army Medical College (AMC)</option>
+            <option value="Khyber Medical College (KMC)">Khyber Medical College (KMC)</option>
+            <option value="Rawalpindi Medical University (RMU)">Rawalpindi Medical University (RMU)</option>
+            <option value="Services Institute of Medical Sciences (SIMS)">Services Institute of Medical Sciences (SIMS)</option>
+            <option value="Fatima Jinnah Medical University (FJMU)">Fatima Jinnah Medical University (FJMU)</option>
+            <option value="Nishtar Medical University (NMU)">Nishtar Medical University (NMU)</option>
+            <option value="Bolan Medical College (BMC)">Bolan Medical College (BMC)</option>
+            <option value="Other Medical College">Other Medical College</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Create Password</label>
+          <input type="password" id="signup-password" class="input" placeholder="At least 6 characters" required autocomplete="new-password">
+        </div>
+        <div class="auth-error" id="signup-error"></div>
+        <button type="submit" class="btn btn-primary btn-full" id="btn-submit-signup">Create Account 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- MODAL: STUDENT PROFILE & MASTERY -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="profile-modal" hidden>
+    <div class="modal-card profile-modal-card">
+      <button class="modal-close" id="btn-close-profile" aria-label="Close Profile">✕</button>
+      <div class="profile-header">
+        <div class="profile-avatar" id="prof-avatar">A</div>
+        <div class="profile-meta">
+          <h3 class="profile-name" id="prof-name">Candidate Name</h3>
+          <span class="profile-email" id="prof-email">candidate@example.com</span>
+          <div class="profile-college-pill" id="prof-college">King Edward Medical University</div>
+        </div>
+      </div>
+
+      <!-- Quick KPI Stats -->
+      <div class="profile-stats-grid">
+        <div class="profile-stat-box">
+          <span class="prof-stat-num" id="prof-quizzes">0</span>
+          <span class="prof-stat-lbl">Tests Solved</span>
+        </div>
+        <div class="profile-stat-box">
+          <span class="prof-stat-num" id="prof-accuracy">0%</span>
+          <span class="prof-stat-lbl">Average Score</span>
+        </div>
+        <div class="profile-stat-box">
+          <span class="prof-stat-num" id="prof-total-q">0</span>
+          <span class="prof-stat-lbl">MCQs Solved</span>
+        </div>
+      </div>
+
+      <!-- Subject Mastery Progress -->
+      <div class="mastery-section">
+        <h4 class="mastery-title">Subject Mastery Matrix</h4>
+        <div class="mastery-bars" id="prof-mastery-bars"></div>
+      </div>
+
+      <!-- Historical Test Attempts -->
+      <div class="profile-history-section">
+        <h4 class="mastery-title">Recent Test Records</h4>
+        <div class="profile-history-list" id="prof-history-list"></div>
+      </div>
+
+      <div class="profile-footer">
+        <button class="btn btn-ghost btn-sm" id="btn-logout" style="color:var(--red)">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Hub -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <!-- Brand Details -->
+      <div class="footer-brand">
+        <div class="footer-logo">M</div>
+        <div>
+          <div class="footer-brand-name">MDCAT PrepMaster</div>
+          <div class="footer-brand-sub">Pakistan's Premier MDCAT Preparation Platform</div>
+        </div>
+      </div>
+
+      <!-- Creator Information -->
+      <div class="footer-creator">
+        <div class="footer-creator-label">Designed &amp; Engineered by</div>
+        <div class="footer-creator-name">Ahmed Raza Ur Rehman</div>
+        <div class="footer-creator-title">Computer Engineer &amp; AI Specialist</div>
+        <div class="footer-links">
+          <a class="footer-link footer-link-wa" href="https://wa.me/923180400030" target="_blank" rel="noopener noreferrer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.22 8.22 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.19 8.19 0 0 1-1.26-4.37c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.48-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43l-.48-.01z"/></svg>
+            WhatsApp
+          </a>
+          <a class="footer-link" href="https://linkedin.com/in/ahmed-raza-ur-rehman" target="_blank" rel="noopener noreferrer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a class="footer-link" href="mailto:ahmed.raza.ur.rehman.pk@gmail.com" aria-label="Email Ahmed Raza">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 0.9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Platform Links -->
+      <div class="footer-links-col">
+        <div class="footer-col-title">Navigation</div>
+        <button class="footer-nav-link" onclick="document.getElementById('btn-start-practice').click()">Practice Tests</button>
+        <button class="footer-nav-link" onclick="document.getElementById('btn-go-prep').click()">Prep Hub</button>
+        <button class="footer-nav-link" onclick="document.getElementById('btn-view-rankings').click()">Merit Rankings</button>
+      </div>
+
+      <!-- Past Papers Matrix -->
+      <div class="footer-links-col">
+        <div class="footer-col-title">Database</div>
+        <div class="footer-stat">2,125 Past Paper MCQs</div>
+        <div class="footer-stat">2020 – 2025 All Sessions</div>
+        <div class="footer-stat">UHS · NUMS · KMU · SZABMU · SIBA · PMC</div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 MDCAT PrepMaster · Engineered for Pakistani Medical Aspirants 🇵🇰</span>
+      <span class="footer-bottom-right">Built by Ahmed Raza Ur Rehman</span>
+    </div>
+  </footer>
+
+  <!-- Question Data Script Fallback & Application Initialization -->
+  <script src="data/questions.js"></script>
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>
