@@ -1,119 +1,125 @@
-import { getDb, saveDb } from './_db.js';
+import { promisify } from 'node:util';
+import { createCipheriv, createDecipheriv, createHmac, randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { list, put } from '@vercel/blob';
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-admin-key',
-  'Access-Control-Allow-Credentials': 'true',
-};
+const scrypt = promisify(scryptCallback);
+const TMP_DB_FILE = '/tmp/mdcat-db.json';
+const BLOB_PATH = 'mdcat-prep/db.json';
+const JWT_SECRET = process.env.JWT_SECRET || 'mdcat-prep-local-secret';
+const DB_KEY = createHmac('sha256', JWT_SECRET).update('mdcat-prep-db').digest();
 
-const DEFAULT_ADMIN_KEY = process.env.ADMIN_KEY || 'mdcat2025admin';
+function emptyDb() {
+  return { users: {}, scores: [] };
+}
 
-export default async function handler(req, res) {
-  Object.entries(CORS).forEach(([k, v]) => res.setHeader(k, v));
-  if (req.method === 'OPTIONS') return res.status(200).end();
+function encodeDb(db) {
+  const iv = randomBytes(12);
+  const cipher = createCipheriv('aes-256-gcm', DB_KEY, iv);
+  const encrypted = Buffer.concat([cipher.update(JSON.stringify(db), 'utf8'), cipher.final()]);
+  return Buffer.concat([iv, cipher.getAuthTag(), encrypted]).toString('base64');
+}
 
-  const key = req.headers['x-admin-key'] || req.query.key || (req.body && req.body.key);
-  if (!key || key !== DEFAULT_ADMIN_KEY) {
-    return res.status(401).json({ error: 'Unauthorized: Invalid admin key' });
+function decodeDb(value) {
+  const payload = Buffer.from(value, 'base64');
+  const decipher = createDecipheriv('aes-256-gcm', DB_KEY, payload.subarray(0, 12));
+  decipher.setAuthTag(payload.subarray(12, 28));
+  return JSON.parse(Buffer.concat([decipher.update(payload.subarray(28)), decipher.final()]).toString('utf8'));
+}
+
+async function loadBlobDb() {
+  const result = await list({ prefix: BLOB_PATH, limit: 1 });
+  const blob = result.blobs[0];
+  if (!blob) return null;
+  const response = await fetch(`${blob.url}?t=${Date.now()}`);
+  if (!response.ok) throw new Error(`Blob read failed with HTTP ${response.status}`);
+  return decodeDb(await response.text());
+}
+
+export async function getDb() {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      return (await loadBlobDb()) || emptyDb();
+    } catch (error) {
+      console.error('Vercel Blob read failed:', error.message);
+    }
   }
 
   try {
-    const db = await getDb();
-
-    if (req.method === 'POST') {
-      const action = req.body?.action;
-      if (action === 'clear-scores') {
-        db.scores = [];
-        await saveDb(db);
-        return res.status(200).json({ ok: true, message: 'All scores cleared.' });
-      }
-      if (action === 'delete-user' && req.body?.userId) {
-        delete db.users[req.body.userId];
-        await saveDb(db);
-        return res.status(200).json({ ok: true, message: 'User deleted.' });
-      }
-    }
-
-    const scores = db.scores || [];
-    const usersList = Object.values(db.users || {}).map(u => ({
-      id: u.id,
-      name: u.name,
-      email: u.email,
-      targetCollege: u.targetCollege,
-      createdAt: u.createdAt,
-      lastLogin: u.lastLogin,
-      quizzes: u.stats?.quizzes || 0,
-      avgPct: u.stats?.avgPct || 0,
-      correctAnswers: u.stats?.correctAnswers || 0,
-      totalQuestions: u.stats?.totalQuestions || 0,
-    }));
-
-    const totalAttempts = scores.length;
-    const avgPct = totalAttempts > 0
-      ? Math.round(scores.reduce((sum, s) => sum + (s.pct || 0), 0) / totalAttempts)
-      : 0;
-
-    const subjects = ['Biology', 'Chemistry', 'Physics', 'English', 'Logical Reasoning'];
-    const bySubject = subjects.map(sub => {
-      const subScores = scores.filter(s => s.subject === sub);
-      const subAvg = subScores.length > 0
-        ? Math.round(subScores.reduce((acc, s) => acc + s.pct, 0) / subScores.length)
-        : 0;
-      return { subject: sub, attempts: subScores.length, avgPct: subAvg };
-    });
-
-    const days = 7;
-    const activityMap = {};
-    for (let i = days - 1; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      activityMap[d.toISOString().slice(0, 10)] = 0;
-    }
-    scores.forEach(s => {
-      const d = new Date(s.createdAt || s.ts || Date.now());
-      const iso = d.toISOString().slice(0, 10);
-      if (activityMap[iso] !== undefined) activityMap[iso]++;
-    });
-    const activity = Object.entries(activityMap).map(([date, count]) => ({ date, count }));
-
-    const sorted = [...scores].sort((a, b) => b.pct - a.pct || a.timeSeconds - b.timeSeconds);
-    const topPerformers = sorted.slice(0, 25).map(s => ({
-      name: s.userName || s.name,
-      pct: s.pct,
-      subject: s.subject || 'All',
-      year: s.paper || s.year || 'All',
-    }));
-
-    const recentScores = [...scores].sort((a, b) => (b.createdAt || b.ts || 0) - (a.createdAt || a.ts || 0)).slice(0, 50).map(s => ({
-      name: s.userName || s.name,
-      score: s.score,
-      total: s.total,
-      subject: s.subject || 'All',
-      paper: s.paper || s.year || 'All',
-      timeSeconds: s.timeSeconds || 0,
-      date: new Date(s.createdAt || s.ts || Date.now()).toLocaleDateString('en-PK', {
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    }));
-
-    return res.status(200).json({
-      summary: {
-        totalAttempts,
-        uniqueUsers: usersList.length || new Set(scores.map(s => (s.userName || s.name).toLowerCase())).size,
-        registeredStudents: usersList.length,
-        avgPct,
-      },
-      bySubject,
-      activity,
-      users: usersList,
-      topPerformers,
-      recentScores,
-    });
-  } catch (err) {
-    return res.status(500).json({ error: 'Admin error: ' + err.message });
+    return JSON.parse(await readFile(TMP_DB_FILE, 'utf8'));
+  } catch {
+    return emptyDb();
   }
+}
+
+export async function saveDb(db) {
+  const encoded = encodeDb(db);
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    await put(BLOB_PATH, encoded, { access: 'public', addRandomSuffix: false, allowOverwrite: true });
+    return;
+  }
+
+  await mkdir('/tmp', { recursive: true });
+  await writeFile(TMP_DB_FILE, JSON.stringify(db), 'utf8');
+}
+
+export async function hashPassword(password) {
+  const salt = randomBytes(16).toString('hex');
+  const hash = (await scrypt(password, salt, 64)).toString('hex');
+  return `scrypt$${salt}$${hash}`;
+}
+
+export async function comparePassword(password, stored) {
+  try {
+    const [, salt, expectedHex] = stored.split('$');
+    const actual = await scrypt(password, salt, 64);
+    const expected = Buffer.from(expectedHex, 'hex');
+    return expected.length === actual.length && timingSafeEqual(expected, actual);
+  } catch {
+    return false;
+  }
+}
+
+function base64Url(value) {
+  return Buffer.from(value).toString('base64url');
+}
+
+export function createToken(user) {
+  const header = base64Url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const payload = base64Url(JSON.stringify({ sub: user.id, name: user.name, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30 }));
+  const signature = createHmac('sha256', JWT_SECRET).update(`${header}.${payload}`).digest('base64url');
+  return `${header}.${payload}.${signature}`;
+}
+
+function verifyToken(token) {
+  try {
+    const [header, payload, signature] = token.split('.');
+    const expected = createHmac('sha256', JWT_SECRET).update(`${header}.${payload}`).digest();
+    const actual = Buffer.from(signature, 'base64url');
+    if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) return null;
+    const claims = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    return claims.exp > Math.floor(Date.now() / 1000) ? claims : null;
+  } catch {
+    return null;
+  }
+}
+
+function getToken(req) {
+  const auth = req.headers.authorization || '';
+  return auth.startsWith('Bearer ') ? auth.slice(7) : req.headers.cookie?.match(/mdcat_session=([^;]+)/)?.[1];
+}
+
+export async function getAuthUser(req) {
+  const claims = verifyToken(getToken(req) || '');
+  if (!claims) return null;
+  const db = await getDb();
+  return db.users?.[claims.sub] || null;
+}
+
+export function setSessionCookie(res, token) {
+  res.setHeader('Set-Cookie', `mdcat_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`);
+}
+
+export function clearSessionCookie(res) {
+  res.setHeader('Set-Cookie', 'mdcat_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
 }
