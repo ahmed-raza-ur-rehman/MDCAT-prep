@@ -673,6 +673,8 @@ function renderQuestion() {
   if (!q) { endQuiz(); return; }
 
   const pct = Math.round(((current + 1) / questions.length) * 100);
+  const progress = document.getElementById('quiz-progress');
+  if (progress) progress.setAttribute('aria-valuenow', String(pct));
   document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
   document.getElementById('quiz-counter').textContent = `${current + 1} / ${questions.length}`;
   document.getElementById('quiz-subject-badge').textContent = q.subject || 'MDCAT';
@@ -851,6 +853,14 @@ function advanceQuestion() {
   }
 }
 
+function confirmFinishQuiz() {
+  const unanswered = state.quiz.answers.filter(answer => answer === null || answer < 0).length;
+  if (unanswered > 0) {
+    return window.confirm(`You have ${unanswered} unanswered question${unanswered === 1 ? '' : 's'}. Submit anyway?`);
+  }
+  return true;
+}
+
 function prevQuestion() {
   if (state.quiz.current > 0) {
     clearInterval(state.quiz.timerInterval);
@@ -883,7 +893,9 @@ function renderPaletteGrid() {
     if (flags.has(i)) cls += ' p-flagged';
     if (i === current) cls += ' p-current';
 
-    return `<button class="${cls}" data-idx="${i}">Q${i + 1}</button>`;
+    const status = answers[i] !== null && answers[i] >= 0 ? 'answered' : 'unanswered';
+    const flagged = flags.has(i) ? ', flagged' : '';
+    return `<button class="${cls}" data-idx="${i}" aria-label="Question ${i + 1}, ${status}${flagged}">Q${i + 1}</button>`;
   }).join('');
 
   grid.querySelectorAll('.palette-btn').forEach(btn => {
@@ -897,7 +909,13 @@ function renderPaletteGrid() {
 }
 
 function initQuizControls() {
-  document.getElementById('btn-next')?.addEventListener('click', advanceQuestion);
+  document.getElementById('btn-next')?.addEventListener('click', () => {
+    if (state.quiz.current === state.quiz.questions.length - 1) {
+      if (confirmFinishQuiz()) endQuiz();
+    } else {
+      advanceQuestion();
+    }
+  });
   document.getElementById('btn-prev-q')?.addEventListener('click', prevQuestion);
   document.getElementById('btn-skip')?.addEventListener('click', () => {
     advanceQuestion();
@@ -916,6 +934,7 @@ function initQuizControls() {
     if (e.target === paletteModal) paletteModal.hidden = true;
   });
   document.getElementById('btn-submit-exam-early')?.addEventListener('click', () => {
+    if (!confirmFinishQuiz()) return;
     paletteModal.hidden = true;
     endQuiz();
   });
@@ -930,7 +949,14 @@ function initQuizControls() {
     if (e.key === '3' || e.key.toLowerCase() === 'c') selectOption(2);
     if (e.key === '4' || e.key.toLowerCase() === 'd') selectOption(3);
     if (e.key.toLowerCase() === 'f') toggleFlag();
-    if (e.key === 'ArrowRight' || e.key === 'Enter') advanceQuestion();
+    if (e.key === 'ArrowRight' || e.key === 'Enter') {
+      e.preventDefault();
+      if (state.quiz.current === state.quiz.questions.length - 1) {
+        if (confirmFinishQuiz()) endQuiz();
+      } else {
+        advanceQuestion();
+      }
+    }
     if (e.key === 'ArrowLeft') prevQuestion();
   });
 }
@@ -1657,6 +1683,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initPrep();
   initAdmin();
   initShareAndPrint();
+
+  window.addEventListener('beforeunload', event => {
+    if (document.getElementById('view-quiz')?.classList.contains('active') && state.quiz.questions.length > 0) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  });
 
   document.getElementById('lb-search')?.addEventListener('input', debounce(renderLeaderboard, 160));
   document.getElementById('lb-subject-filter')?.addEventListener('change', renderLeaderboard);

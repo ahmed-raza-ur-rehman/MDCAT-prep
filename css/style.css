@@ -949,6 +949,13 @@ a {
   padding-top: 10px;
 }
 
+.quiz-shortcuts {
+  color: var(--text3);
+  font-size: 11px;
+  text-align: center;
+  margin: 2px 0 14px;
+}
+
 .quiz-nav {
   display: flex;
   justify-content: space-between;
