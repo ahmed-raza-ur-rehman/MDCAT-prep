@@ -349,8 +349,9 @@ async function checkCurrentSession() {
       state.user.authenticated = true;
       state.user.user = data.user;
       state.user.history = data.history || [];
-      updateAuthUI();
-    }
+    updateAuthUI();
+    renderStudyMomentum();
+  }
   } catch {}
 }
 
@@ -1313,7 +1314,7 @@ function renderLeaderboard() {
         <td><strong>${escHtml(s.name || s.userName || 'Student')}</strong></td>
         <td><strong style="color:var(--accent)">${s.pct}%</strong> <span style="color:var(--text3); font-size:11px;">(${s.score}/${s.total})</span></td>
         <td>${s.subject || 'All'}</td>
-        <td>${s.paper || s.year || '–'}</td>
+        <td>${s.paper || s.year || '��'}</td>
         <td>${mins}m ${secs}s</td>
         <td>${date}</td>
       </tr>`;
@@ -1506,6 +1507,58 @@ function renderAdminDashboard(data) {
   }
 }
 
+function renderStudyMomentum() {
+  const localScores = JSON.parse(localStorage.getItem('mdcat_offline_scores') || '[]');
+  const history = [...(state.user.history || []), ...localScores];
+  const quizzes = history.length;
+  const totalQuestions = history.reduce((sum, item) => sum + Number(item.total || item.totalQuestions || 0), 0);
+  const totalCorrect = history.reduce((sum, item) => sum + Number(item.correct || 0), 0);
+  const accuracy = totalQuestions ? `${Math.round((totalCorrect / totalQuestions) * 100)}%` : '—';
+  const days = new Set(history.map(item => new Date(item.createdAt || item.ts || Date.now()).toDateString())).size;
+  const action = document.getElementById('btn-momentum-action');
+  const message = document.getElementById('momentum-message');
+  const quizzesEl = document.getElementById('momentum-quizzes');
+  const accuracyEl = document.getElementById('momentum-accuracy');
+  const streakEl = document.getElementById('momentum-streak');
+  if (!action || !message || !quizzesEl || !accuracyEl || !streakEl) return;
+  quizzesEl.textContent = quizzes;
+  accuracyEl.textContent = accuracy;
+  streakEl.textContent = `${days} ${days === 1 ? 'day' : 'days'}`;
+  if (quizzes > 0) {
+    message.textContent = accuracy === '—' ? 'Keep practicing to build a useful baseline.' : `You are averaging ${accuracy}. Review missed questions after every session.`;
+    action.textContent = 'Continue practicing →';
+  }
+}
+
+function initNavigation() {
+  const menuButton = document.getElementById('btn-nav-menu');
+  const nav = document.getElementById('main-nav');
+  if (!menuButton || !nav) return;
+  const closeMenu = () => {
+    nav.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+  };
+  menuButton.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuButton.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', event => {
+    if (event.target.closest('.nav-link')) closeMenu();
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 720) closeMenu();
+  });
+}
+
+function initKeyboardShortcuts() {
+  document.addEventListener('keydown', event => {
+    if (event.target.matches('input, textarea, select')) return;
+    if (event.key === 'Escape') document.querySelectorAll('[data-modal], .modal-backdrop, .palette-modal-backdrop').forEach(el => { el.hidden = true; });
+    if (event.key.toLowerCase() === 'p' && !event.ctrlKey && !event.metaKey) showView('config');
+    if (event.key.toLowerCase() === 'h' && !event.ctrlKey && !event.metaKey) showView('prep');
+  });
+}
+
 function initTheme() {
   const saved = localStorage.getItem('mdcat_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
@@ -1595,6 +1648,8 @@ function checkActiveQuizSession() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initNavigation();
+  initKeyboardShortcuts();
   initFullscreen();
   initAuth();
   initConfig();
@@ -1619,6 +1674,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-all-rankings')?.addEventListener('click', () => showView('leaderboard'));
   document.getElementById('btn-retake')?.addEventListener('click', () => launchQuiz());
   document.getElementById('btn-new-quiz')?.addEventListener('click', () => showView('config'));
+  document.getElementById('btn-momentum-action')?.addEventListener('click', () => showView('config'));
 
   document.getElementById('btn-save-score')?.addEventListener('click', () => {
     const { questions, answers, elapsedSeconds } = state.quiz;
@@ -1634,6 +1690,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderQuickGrid();
+  renderStudyMomentum();
   loadMiniLeaderboard();
 
   ensureQuestions().then(() => {
