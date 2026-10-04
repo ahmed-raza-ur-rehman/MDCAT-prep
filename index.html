@@ -41,13 +41,13 @@
       </div>
     </button>
 
-    <nav class="nav-links" aria-label="Main Navigation">
-      <button class="nav-link" id="nav-quiz" data-view="config">Practice</button>
-      <button class="nav-link" id="nav-prep" data-view="prep">Prep Hub</button>
-      <button class="nav-link" id="nav-leaderboard" data-view="leaderboard">Rankings</button>
-    </nav>
+      <nav class="nav-links" id="main-nav" aria-label="Main Navigation">
+        <button class="nav-link" id="nav-quiz" data-view="config">Practice</button>
+        <button class="nav-link" id="nav-prep" data-view="prep">Prep Hub</button>
+        <button class="nav-link" id="nav-leaderboard" data-view="leaderboard">Rankings</button>
+      </nav>
 
-    <div class="nav-end">
+      <div class="nav-end">
       <div id="nav-auth-wrap">
         <button class="btn btn-sm btn-outline" id="btn-open-auth">Sign In</button>
         <button class="user-badge" id="btn-user-profile" hidden aria-label="User Profile">
@@ -56,6 +56,7 @@
         </button>
       </div>
 
+      <button class="icon-btn nav-menu-btn" id="btn-nav-menu" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false">Menu</button>
       <button class="icon-btn" id="btn-fullscreen" aria-label="Enter Fullscreen" title="Enter Fullscreen">FS</button>
       <button class="icon-btn" id="btn-theme" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">☀️</button>
     </div>
@@ -79,6 +80,21 @@
           <button class="btn btn-ghost btn-lg" id="btn-view-rankings">Leaderboard 🏆</button>
         </div>
       </div>
+    </section>
+
+    <!-- Study momentum -->
+    <section class="momentum-card container" aria-labelledby="momentum-title">
+      <div class="momentum-copy">
+        <span class="eyebrow">Your study momentum</span>
+        <h2 id="momentum-title">Build a consistent practice habit.</h2>
+        <p id="momentum-message">Start a short diagnostic to reveal your strongest and weakest subjects.</p>
+      </div>
+      <div class="momentum-stats" aria-label="Study progress">
+        <div><strong id="momentum-quizzes">0</strong><span>Tests taken</span></div>
+        <div><strong id="momentum-accuracy">—</strong><span>Avg. accuracy</span></div>
+        <div><strong id="momentum-streak">0 days</strong><span>Current streak</span></div>
+      </div>
+      <button class="btn btn-primary" id="btn-momentum-action">Take a diagnostic →</button>
     </section>
 
     <!-- Stats Grid -->
@@ -291,10 +307,10 @@
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- VIEW: QUIZ RUNTIME ENGINE -->
-  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- ══════════���════════════════════════════════════════════════════ -->
   <main id="view-quiz" class="view">
     <!-- Progress Bar -->
-    <div class="quiz-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    <div class="quiz-progress-bar" id="quiz-progress" role="progressbar" aria-label="Quiz progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
       <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
     </div>
 
@@ -348,6 +364,8 @@
         <div class="review-explanation" id="review-explanation"></div>
         <div class="review-ref" id="review-ref"></div>
       </div>
+
+      <p class="quiz-shortcuts" aria-label="Keyboard shortcuts">Keyboard: 1–4 answer · F flag · ←/→ navigate · Enter continue</p>
 
       <!-- Quiz Navigation Controls -->
       <div class="quiz-nav">
