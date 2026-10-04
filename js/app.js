@@ -156,6 +156,8 @@ function showView(name) {
   document.querySelectorAll('.nav-link').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.view === name);
   });
+  window.__MDCAT_STATE__ = state;
+  document.dispatchEvent(new CustomEvent(`view:${name}`));
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -987,6 +989,8 @@ function endQuiz() {
   });
 
   state.quiz.breakdown = breakdown;
+  window.__MDCAT_STATE__ = state;
+  document.dispatchEvent(new CustomEvent('quiz:complete', { detail: { total: questions.length, subject: state.config.subject } }));
   const total = questions.length;
   const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
 
